@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "109804656302",
+    "firebase_url": "https://conatus-app-e8396.firebaseio.com",
+    "project_id": "conatus-app-e8396",
+    "storage_bucket": "conatus-app-e8396.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:109804656302:android:4132db71922c45fce33f3f",
+        "android_client_info": {
+          "package_name": "com.example.conatus_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "109804656302-aurro0fn4enfvtqcpc2n5atatfjlb7ps.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.conatus_app",
+            "certificate_hash": "50cbd75ff96f99dd8948caab0fcd6e3f8853e7dc"
+          }
+        },
+        {
+          "client_id": "109804656302-tajrjd5no04p1mrslhl73i8oe1haj8ao.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCz8fi-0IjeQRq8Toxc0LOma507GQkHcj8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "109804656302-tajrjd5no04p1mrslhl73i8oe1haj8ao.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
