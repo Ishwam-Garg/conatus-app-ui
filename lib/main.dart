@@ -29,8 +29,8 @@ class MyApp extends StatelessWidget {
           ),
         ),
         // home: RootPage());
-        home: LoginPage());
-        //home: Non_user_homepage());
+        //home: LoginPage());
+        home: Non_user_homepage());
   }
 }
 

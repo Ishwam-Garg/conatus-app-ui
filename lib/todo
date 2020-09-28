@@ -1,0 +1,28 @@
+LOGGED OUT/NON CONATUS MEMBER
+1)POSTS
+2)DOUBTS
+3)SEARCH
+4)LOGIN
+5) add bottom nav in non user (doubts/posts)
+6) add Search
+
+Logged in/Conatus MEMBER
+1)posts-birthday,meeting.announcements
+2)Attendance-improve ui
+3)homepage-add post-floating button
+4)Shift profile page to drawer
+5)Replace bottom nav to query/doubt page
+6) in app web view on tap project
+
+Doubt page-Users
+1)Can answer doubts- multi-answers on tap add answer- show pop up for adding answer (names-image included)
+2)Can raise questions-floating button (names included,image)
+3)tags-solved/unsolved
+
+Doubt-page-Non User
+1) can see doubts
+2) can raise questions
+
+Profile
+Add validation in year and section
+

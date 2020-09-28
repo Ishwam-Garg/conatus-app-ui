@@ -160,13 +160,6 @@ class _doubt_pageState extends State<doubt_page> {
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.black54,
                 ),
-                child: Row(
-                  children: [
-                    Container(height: 20,color: ColorPalette.BLUE_NORMAL,width: 5,),
-                    SizedBox(width: 10,),
-                    Text("Doubts Here",style: TextStyle(fontSize: Unit.FONT_LARGE,color: Colors.white),),
-                  ],
-                ),
               ),
               DoubtBox(),
             ],
