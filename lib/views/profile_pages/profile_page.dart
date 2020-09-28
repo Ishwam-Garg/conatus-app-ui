@@ -155,7 +155,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    SizedBox(height: 20),
                     Text(
                       'name',
                       style: TextStyle(color: Colors.white, fontSize: Unit.FONT_LARGER),

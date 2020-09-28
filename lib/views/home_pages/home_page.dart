@@ -93,32 +93,6 @@ class _HomePageState extends State<HomePage> {
         ));
   }
 
-  // a button to indicate the drawer not used currently have to build it properly
-  Widget pull_drawer()
-  {
-    return FloatingActionButton(onPressed: null,
-      backgroundColor: ColorPalette.PRIMARY_DARK,
-      elevation: 5,
-      child: Material(
-        color: Colors.black,
-        elevation: 5,
-        shadowColor: ColorPalette.PRIMARY_DARK,
-        borderRadius: BorderRadius.circular(50),
-        child: Container(
-          height: 50,
-          width: 50,
-          margin: EdgeInsets.only(left: 1),
-          padding: EdgeInsets.only(left: 1),
-          alignment: Alignment.centerLeft,
-        ),
-      ),
-    );
-  }
-
-  Widget post_button()
-  {
-    // for posting a post
-  }
   // PASS A NAME AS PARAMETER IN IT
   Widget birthdayBox() {
     return Container(
@@ -153,6 +127,7 @@ class _HomePageState extends State<HomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                SizedBox(width: 10,),
                 Container(
                   alignment: Alignment.center,
                   child: Column(
@@ -190,6 +165,7 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 ),
+                SizedBox(width: 10,),
               ],
             ),
             /*

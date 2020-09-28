@@ -15,11 +15,40 @@ class Non_user_homepage extends StatefulWidget {
   _Non_user_homepageState createState() => _Non_user_homepageState();
 }
 
+Widget login_container_nonuser()
+{
+  return GestureDetector(
+    onTap: (){
+      //login code here
+    },
+    child: Container(
+      width: double.infinity,
+      margin: EdgeInsets.symmetric(vertical: 5),
+      padding: EdgeInsets.all(Unit.V_MARGIN),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.black54,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(height: 15,width: 5,color: ColorPalette.YELLOW,),
+          Text("Login",style: TextStyle(fontWeight: FontWeight.bold,fontSize: Unit.FONT_MEDIUM,color: ColorPalette.SELECTED_NAV_BAR),),
+          Text(":",style: TextStyle(fontSize: Unit.FONT_MEDIUM,color: ColorPalette.SELECTED_NAV_BAR),),
+          SizedBox(width: 5,),
+          Text("Conatus member Login here",style: TextStyle(fontSize: Unit.FONT_SMALL,color: ColorPalette.SELECTED_NAV_BAR,fontWeight: FontWeight.bold),)
+        ],
+      ),
+    ),
+  );
+}
+
+
 class _Non_user_homepageState extends State<Non_user_homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar.appBar(title: 'DashBoard'),
+      appBar: CustomAppBar.appBar(title: 'HomePage'),
       backgroundColor: ColorPalette.PRIMARY_BG,
       body: Container(
         constraints: BoxConstraints.expand(),
@@ -33,6 +62,7 @@ class _Non_user_homepageState extends State<Non_user_homepage> {
             Column(
               children: <Widget>[
               SizedBox(height: 10),
+              login_container_nonuser(),
               /*Backend Linked Starts Here
               // ConatusPost(),
               // StreamBuilder(

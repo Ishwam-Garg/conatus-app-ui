@@ -15,6 +15,8 @@ class doubt_page extends StatefulWidget {
 }
 
 class _doubt_pageState extends State<doubt_page> {
+
+
   //pass title, short description, and name of questinee to this widget
   Widget DoubtBox() {
     return GestureDetector(
@@ -33,23 +35,26 @@ class _doubt_pageState extends State<doubt_page> {
             children: <Widget>[
               Row(mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Container(
-                    child: Row(
-                      children: [
+                  Flexible(
+                    child: Container(
+                      child: Row(
+                        children: [
                         Container(height: 15,color: ColorPalette.BLUE_NORMAL,width: 5,),
                         SizedBox(width: 5,),
                         Text("Title:",style: TextStyle(fontSize: Unit.FONT_LARGE,color: Colors.white),),
                         SizedBox(width: 5,),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Text('How to add floating btn',
-                            overflow: TextOverflow.ellipsis,
+                        Expanded(
+                          child: Text('How to add floating button in scaffold',//pass title text here
+                            maxLines: 1,
+                            softWrap: false,
+                            overflow: TextOverflow.fade,
                             style: TextStyle(fontSize: Unit.FONT_MEDIUM,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
                       ],),),
+                    ),
                 ],
               ),
               SizedBox(height: 5,),
@@ -73,56 +78,53 @@ class _doubt_pageState extends State<doubt_page> {
                   ),
                   SizedBox(width: 15,),
                   Container(
-                    child: Row(
+                    child:Expanded(
+                      child: Row(
                       children: [
                         Container(
                           width: 5,
-                          height: 80,
+                          height: 100,
                           color: ColorPalette.YELLOW,
                         ),
                         SizedBox(width: 5,),
-                        Column(
+                        Expanded(
+                          child:
+                          Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SingleChildScrollView(
-                              child: Container(
-                                height: 100,
-                                child: Text("\"I am facing problem \n while using floating button \n and dont know how \n to solve it\"",style: TextStyle(fontSize: Unit.FONT_SMALL,color: Colors.white),),
+                            Container(
+                              height: 100,
+                              constraints: BoxConstraints(maxWidth: 200),
+                              child: Text("\"I am facing problem while using floating button \n and dont know how \n to solve it\"", //past short description here
+                                overflow: TextOverflow.fade,
+                                softWrap: false,
+                                style: TextStyle(fontSize: Unit.FONT_SMALL,color: Colors.white),
                               ),
-                            )
+                            ),
                           ],
                         ),
+                        ),
                       ],
+                    ),
                     ),
                   ),
                 ],
               ),
-              /*
-            GestureDetector(
-              onTap: () {
-                /*
-                Navigator.push(
-                    context, CupertinoPageRoute(builder: (_) => Attendance()));
-                */
-              },
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(7),
+              SizedBox(height: 10,),
+              Row(
+                children: [
+                  Material(
+                    elevation: 10,
+                    borderRadius: BorderRadius.circular(10),
                     color: ColorPalette.YELLOW,
+                    child: Container(
+                        padding: EdgeInsets.all(10),
+                        child: Text("Solved",style: TextStyle(fontSize: Unit.FONT_MEDIUM,color: ColorPalette.SELECTED_NAV_BAR),),
+                    ),
                   ),
-                  child: Text(
-                    'SHOW',
-                    style: TextStyle(fontSize: Unit.FONT_MEDIUM,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
+                ],
               ),
-            ),*/
             ],
           )),
     );
@@ -131,6 +133,7 @@ class _doubt_pageState extends State<doubt_page> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: CustomAppBar.appBar(title: "Doubts",),
       backgroundColor: ColorPalette.PRIMARY_BG,
