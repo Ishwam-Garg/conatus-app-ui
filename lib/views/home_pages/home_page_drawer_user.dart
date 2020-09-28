@@ -60,15 +60,8 @@ class _UserDrawerState extends State<UserDrawer> {
                   GestureDetector(
                     onTap: () async {
                       //Change this to navigate to profile page.dart
-                      // await Navigator.push(
-                      //     context,
-                      //     CupertinoPageRoute(
-                      //         builder: (_) => EditProfile(
-                      //               initalBio: bio,
-                      //               initalYear: year,
-                      //               initialSection: section,
-                      //             )));
-                      // loadProfileData();
+                      Navigator.push(
+                          context, CupertinoPageRoute(builder: (_) => ProfilePage()));
                     },
                     child: Text(
                       'See More',

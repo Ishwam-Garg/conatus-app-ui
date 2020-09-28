@@ -8,8 +8,9 @@ import 'package:conatus_app/views/home_pages/attendance.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../constants/color_palatte.dart';
-import '../../constants/color_palatte.dart';
 import 'home_page_drawer_user.dart';
+import 'package:conatus_app/views/doubt pages/doubt_page.dart';
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -224,13 +225,15 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar.appBar(title: 'DashBoard'),
+      appBar: CustomAppBar.appBar(title: 'Home',),
       drawer: UserDrawer(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.chat,color: ColorPalette.SELECTED_NAV_BAR,),
         backgroundColor: ColorPalette.PRIMARY_DARK,
         onPressed: (){
           //add post page here
+          Navigator.push(
+              context, CupertinoPageRoute(builder: (_) => doubt_page()));
         },
         elevation: 5,
       ),
