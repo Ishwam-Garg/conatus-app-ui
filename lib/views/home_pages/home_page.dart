@@ -2,15 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:conatus_app/components/conatus_post.dart';
 import 'package:conatus_app/components/custom_appbar.dart';
 import 'package:conatus_app/constants/color_palatte.dart';
-import 'package:conatus_app/constants/config.dart';
 import 'package:conatus_app/constants/units.dart';
 import 'package:conatus_app/views/home_pages/attendance.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../constants/color_palatte.dart';
 import 'home_page_drawer_user.dart';
-import 'package:conatus_app/views/doubt pages/doubt_page.dart';
-
+// import '../doubt pages/doubt_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -18,7 +16,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   //attendance box at first
   Widget attendanceBox() {
     return Container(
@@ -43,9 +40,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Text(
                   'CONATUS\' ATTENDANCE',
-                  style: TextStyle(fontSize: Unit.FONT_LARGE,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: Unit.FONT_LARGE, color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -56,21 +51,17 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 Text(
                   'Attendance ',
-                  style: TextStyle(
-                      fontSize: Unit.FONT_SMALL, color: Colors.white),
+                  style: TextStyle(fontSize: Unit.FONT_SMALL, color: Colors.white),
                 ),
                 Text(
                   ' 13/15',
-                  style: TextStyle(fontSize: Unit.FONT_MEDIUM,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: Unit.FONT_MEDIUM, color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                    context, CupertinoPageRoute(builder: (_) => Attendance()));
+                Navigator.push(context, CupertinoPageRoute(builder: (_) => Attendance()));
               },
               child: Align(
                 alignment: Alignment.centerRight,
@@ -82,9 +73,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   child: Text(
                     'SHOW',
-                    style: TextStyle(fontSize: Unit.FONT_MEDIUM,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: Unit.FONT_MEDIUM, color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -107,27 +96,37 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Row(mainAxisAlignment: MainAxisAlignment.center,
-               children: [
-                 Container(
-                   child: Row(
-                     children: [
-                       Icon(Icons.cake,color: ColorPalette.YELLOW,),
-                       SizedBox(width: 2,),
-                       Text(
-                         'Happy Birthday',
-                         style: TextStyle(fontSize: Unit.FONT_LARGE,
-                             color: Colors.white,
-                             fontWeight: FontWeight.bold),
-                       ),
-                     ],),),
-               ],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.cake,
+                        color: ColorPalette.YELLOW,
+                      ),
+                      SizedBox(
+                        width: 2,
+                      ),
+                      Text(
+                        'Happy Birthday',
+                        style: TextStyle(fontSize: Unit.FONT_LARGE, color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-            SizedBox(height: 5,),
+            SizedBox(
+              height: 5,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 Container(
                   alignment: Alignment.center,
                   child: Column(
@@ -139,7 +138,10 @@ class _HomePageState extends State<HomePage> {
                         backgroundColor: ColorPalette.BLUE,
                         // backgroundImage: NetworkImage(photo),
                       ),
-                      Text("Name",style: TextStyle(color: ColorPalette.UNSELECTED_NAV_BAR),),
+                      Text(
+                        "Name",
+                        style: TextStyle(color: ColorPalette.UNSELECTED_NAV_BAR),
+                      ),
                     ],
                   ),
                 ),
@@ -151,21 +153,28 @@ class _HomePageState extends State<HomePage> {
                         height: 80,
                         color: ColorPalette.YELLOW,
                       ),
-                      SizedBox(width: 5,),
+                      SizedBox(
+                        width: 5,
+                      ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
                             alignment: Alignment.topCenter,
-                            child: Text("\"Conatus wishes you a \n a very happy birthday \n may you achieve \n all your goals in future\"",style: TextStyle(fontSize: Unit.FONT_SMALL,color: Colors.white),),
+                            child: Text(
+                              "\"Conatus wishes you a \n a very happy birthday \n may you achieve \n all your goals in future\"",
+                              style: TextStyle(fontSize: Unit.FONT_SMALL, color: Colors.white),
+                            ),
                           ),
                         ],
                       ),
                     ],
                   ),
                 ),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
               ],
             ),
             /*
@@ -201,15 +210,20 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar.appBar(title: 'Home',),
+      appBar: CustomAppBar.appBar(
+        title: 'Home',
+      ),
       drawer: UserDrawer(),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.chat,color: ColorPalette.SELECTED_NAV_BAR,),
+        child: Icon(
+          Icons.chat,
+          color: ColorPalette.SELECTED_NAV_BAR,
+        ),
         backgroundColor: ColorPalette.PRIMARY_DARK,
-        onPressed: (){
+        onPressed: () {
           //add post page here
-          Navigator.push(
-              context, CupertinoPageRoute(builder: (_) => doubt_page()));
+          // Navigator.push(
+          //     context, CupertinoPageRoute(builder: (_) => doubt_page()));
         },
         elevation: 5,
       ),
