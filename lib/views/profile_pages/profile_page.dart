@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:conatus_app/auth/login_page.dart';
 import 'package:conatus_app/components/custom_appbar.dart';
 import 'package:conatus_app/components/custom_divider.dart';
 import 'package:conatus_app/components/project_user.dart';
@@ -90,8 +89,8 @@ class _ProfilePageState extends State<ProfilePage> {
               // final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
               try {
                 // await _firebaseAuth.signOut();
-                Navigator.of(context, rootNavigator: true)
-                    .pushReplacement(MaterialPageRoute(builder: (_) => LoginPage()));
+                // Navigator.of(context, rootNavigator: true)
+                //     .pushReplacement(MaterialPageRoute(builder: (_) => LoginPage()));
               } catch (e) {
                 print("Error in logging out $e");
               }
@@ -206,7 +205,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar.appBar(title: 'Profile'),
+      appBar: CustomAppBar.editAppBar(title: 'Profile',context: context),
       backgroundColor: ColorPalette.PRIMARY_BG,
       body: Container(
         constraints: BoxConstraints.expand(),

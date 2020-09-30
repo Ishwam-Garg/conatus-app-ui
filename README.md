@@ -1,18 +1,25 @@
-# conatus_app
+# Conatus App
 
-A new Flutter project.
+Todo List
 
-## Getting Started
+## UI
+[x] Logged out posts
+[x] DOUBTS
+[x] SEARCH
+[x] LOGIN
+[x] add bottom nav in non user (doubts/posts)
+[x] add Search
+[ ] tags-solved/unsolved
+[ ] posts-birthday,meeting.announcements
+[ ] Attendance-improve ui
+[x] homepage-add post-floating button
+[x] Shift profile page to drawer
+[x] Replace bottom nav to query/doubt page
+[ ] in app web view on tap project
 
-This project is a starting point for a Flutter application.
+## bugs
+[ ] logout-route (dont use persistent nav bar in rootloggedout)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
-#firebase branch
+#### Ishwam
+[ ] Add validation in year and section
+[ ] flutter_form_builder

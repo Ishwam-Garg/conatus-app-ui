@@ -1,14 +1,10 @@
-// flutter_form_builder 
-// ui attendance
-
-import 'package:conatus_app/auth/login_page.dart';
 import 'package:conatus_app/views/root_loggedin_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:conatus_app/Non-User-Pages/Non-User-homepage.dart';
+import 'views/root_loggedout_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,9 +24,7 @@ class MyApp extends StatelessWidget {
             Theme.of(context).textTheme,
           ),
         ),
-        // home: RootPage());
-        //home: LoginPage());
-        home: Non_user_homepage());
+        home: RootPage());
   }
 }
 
@@ -51,6 +45,6 @@ class _RootPageState extends State<RootPage> {
 
   @override
   Widget build(BuildContext context) {
-    return isLoggedin ? RootLoggedIn() : LoginPage();
+    return isLoggedin ? RootLoggedIn() : RootLoggedOut();
   }
 }

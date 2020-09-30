@@ -6,9 +6,8 @@ import 'package:conatus_app/constants/units.dart';
 import 'package:conatus_app/views/home_pages/attendance.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../constants/color_palatte.dart';
+// import 'package:conatus_app/constants/color_palatte.dart';
 import 'home_page_drawer_user.dart';
-// import '../doubt pages/doubt_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -82,7 +81,6 @@ class _HomePageState extends State<HomePage> {
         ));
   }
 
-  // PASS A NAME AS PARAMETER IN IT
   Widget birthdayBox() {
     return Container(
         width: double.infinity,
@@ -206,14 +204,21 @@ class _HomePageState extends State<HomePage> {
         ));
   }
 
-  //main body starts here
+  void openDrawer() {
+    _drawerKey.currentState.openDrawer();
+  }
+
+  GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar.appBar(
+      key: _drawerKey,
+      appBar: CustomAppBar.appBarwithMenu(
         title: 'Home',
+        context: context,
+        func: openDrawer
       ),
-      drawer: UserDrawer(),
+      drawer: UserDrawer.homeDrawer(context),
       floatingActionButton: FloatingActionButton(
         child: Icon(
           Icons.chat,

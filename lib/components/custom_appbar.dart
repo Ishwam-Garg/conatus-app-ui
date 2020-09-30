@@ -6,15 +6,17 @@ import 'package:flutter/material.dart';
 
 class CustomAppBar {
   static Widget leading = Container(
-    margin: EdgeInsets.all(10),
-    padding: EdgeInsets.all(5),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(10),
-      color: ColorPalette.UNSELECTED_NAV_BAR,
-    ),
-      child : FittedBox(child: Text('C', style: TextStyle(color: Colors.white), ))
-
-  );
+      margin: EdgeInsets.all(10),
+      padding: EdgeInsets.all(5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: ColorPalette.UNSELECTED_NAV_BAR,
+      ),
+      child: FittedBox(
+          child: Text(
+        'C',
+        style: TextStyle(color: Colors.white),
+      )));
 
   static Widget appBar({String title, bool canSearch = false, BuildContext context}) {
     return PreferredSize(
@@ -47,6 +49,42 @@ class CustomAppBar {
                     ),
                   )
                 : SizedBox(),
+            SizedBox(width: 15),
+          ],
+          elevation: 0,
+          // centerTitle: true,
+        ),
+      ),
+    );
+  }
+
+  static Widget appBarwithMenu({String title, BuildContext context, Function func}) {
+    return PreferredSize(
+      preferredSize: Size.fromHeight(kToolbarHeight),
+      child: Container(
+        decoration: BoxDecoration(boxShadow: [
+          BoxShadow(
+            color: ColorPalette.SELECTED_NAV_BAR.withOpacity(0.2),
+            offset: Offset(0, 2.0),
+          )
+        ]),
+        child: AppBar(
+          backgroundColor: ColorPalette.PRIMARY_DARK,
+          title: Text(
+            title,
+            style: TextStyle(color: ColorPalette.SELECTED_NAV_BAR, fontSize: Unit.FONT_LARGE),
+          ),
+          automaticallyImplyLeading: false,
+          titleSpacing: 0.0,
+          leading: leading,
+          actions: <Widget>[
+            GestureDetector(
+              onTap: func,
+              child: Icon(
+                Icons.menu,
+                color: Colors.white,
+              ),
+            ),
             SizedBox(width: 15),
           ],
           elevation: 0,

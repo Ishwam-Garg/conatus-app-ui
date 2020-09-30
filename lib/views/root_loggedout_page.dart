@@ -1,24 +1,22 @@
 import 'package:conatus_app/components/custom_divider.dart';
 import 'package:conatus_app/constants/color_palatte.dart';
 import 'package:conatus_app/constants/units.dart';
-import 'package:conatus_app/views/explore_pages/explore_page.dart';
-import 'package:conatus_app/views/home_pages/home_page.dart';
+import 'package:conatus_app/views/home_pages/home_page_loggedout.dart';
 import 'package:conatus_app/views/faqs_pages/faqs_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class RootLoggedIn extends StatefulWidget {
+class RootLoggedOut extends StatefulWidget {
   @override
-  _RootLoggedInState createState() => _RootLoggedInState();
+  _RootLoggedOutState createState() => _RootLoggedOutState();
 }
 
-class _RootLoggedInState extends State<RootLoggedIn> {
+class _RootLoggedOutState extends State<RootLoggedOut> {
   int selectedIndex = 0;
   String _currentPage = "Home";
-  List<String> pageKeys = ["Home", "Explore", "FAQs"];
+  List<String> pageKeys = ["Home", "FAQs"];
   Map<String, GlobalKey<NavigatorState>> _navigatorKeys = {
     "Home": GlobalKey<NavigatorState>(),
-    "Explore": GlobalKey<NavigatorState>(),
     "FAQs": GlobalKey<NavigatorState>(),
   };
 
@@ -66,7 +64,6 @@ class _RootLoggedInState extends State<RootLoggedIn> {
       },
       items: [
         BottomNavigationBarItem(icon: Icon(Icons.store), title: Text('Home')),
-        BottomNavigationBarItem(icon: Icon(Icons.alternate_email), title: Text('Explore')),
         BottomNavigationBarItem(icon: Icon(Icons.question_answer), title: Text('FAQs')),
       ],
     );
@@ -96,7 +93,6 @@ class _RootLoggedInState extends State<RootLoggedIn> {
             Expanded(
               child: Stack(children: <Widget>[
                 _buildOffstageNavigator("Home"),
-                _buildOffstageNavigator("Explore"),
                 _buildOffstageNavigator("FAQs"),
               ]),
             ),
@@ -128,9 +124,7 @@ class TabNavigator extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget child;
     if (tabItem == "Home")
-      child = HomePage();
-    else if (tabItem == "Explore")
-      child = ExplorePage();
+      child = HomePageLoggedOut();
     else if (tabItem == "FAQs") child = FAQsPage();
 
     return Navigator(

@@ -5,16 +5,12 @@ import 'package:conatus_app/constants/config.dart';
 import 'package:conatus_app/constants/units.dart';
 import 'package:flutter/material.dart';
 
-class ReportForm extends StatefulWidget {
-  final name;
-  final email;
-  final uid;
-  ReportForm({@required this.name, @required this.email, @required this.uid});
+class DoubtForm extends StatefulWidget {
   @override
-  _ReportFormState createState() => _ReportFormState();
+  _DoubtFormState createState() => _DoubtFormState();
 }
 
-class _ReportFormState extends State<ReportForm> {
+class _DoubtFormState extends State<DoubtForm> {
   String reason;
 
   Widget headerText(title) {
@@ -85,7 +81,7 @@ class _ReportFormState extends State<ReportForm> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        appBar: CustomAppBar.editAppBar(context: context, title: 'Reprot/Submit Query'),
+        appBar: CustomAppBar.editAppBar(context: context, title: 'Report/Submit Query'),
         backgroundColor: ColorPalette.PRIMARY_BG,
         body: Container(
           constraints: BoxConstraints.expand(),
@@ -97,7 +93,6 @@ class _ReportFormState extends State<ReportForm> {
                 SizedBox(height: Unit.V_MARGIN),
                 headerText('Name'),
                 textInput(
-                  initialValue: widget.name,
                   change: (val) {},
                   hintText: 'Your Name',
                   readOnly: true,
@@ -106,7 +101,6 @@ class _ReportFormState extends State<ReportForm> {
                 SizedBox(height: 20),
                 headerText('Your Email'),
                 textInput(
-                  initialValue: widget.email,
                   change: (val) {},
                   hintText: 'Your Email',
                   readOnly: true,
