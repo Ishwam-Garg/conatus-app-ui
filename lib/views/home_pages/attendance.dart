@@ -14,11 +14,28 @@ class Attendance extends StatefulWidget {
 class _AttendanceState extends State<Attendance> {
   bool isPresent;
   int viewType = 0;
+  List data = [
+    ['12.09.2020', false],
+    ['13.09.2020', true],
+    ['14.09.2020', false],
+    ['15.09.2020', true],
+    ['16.09.2020', true],
+    ['19.09.2020', true],
+  ];
   static const TextStyle tabTextStyle = const TextStyle(fontSize: 18);
   final Map<int, Widget> tabBar = const <int, Widget>{
-    0: Text('Overall', style: tabTextStyle,),
-    1: Text('Present', style: tabTextStyle,),
-    2: Text('Absent', style: tabTextStyle,),
+    0: Text(
+      'Overall',
+      style: tabTextStyle,
+    ),
+    1: Text(
+      'Present',
+      style: tabTextStyle,
+    ),
+    2: Text(
+      'Absent',
+      style: tabTextStyle,
+    ),
   };
 
   Widget segmentedControl() {
@@ -122,7 +139,7 @@ class _AttendanceState extends State<Attendance> {
       body: CustomScrollView(
         physics: BouncingScrollPhysics(),
         slivers: <Widget>[
-          AttendanceSliverBar(viewType : viewType),
+          AttendanceSliverBar(viewType: viewType),
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
@@ -140,16 +157,18 @@ class _AttendanceState extends State<Attendance> {
                       SizedBox(height: 10),
                       isPresent != null
                           ? MarkedAttendance(
+                              date: '20.09.2020',
                               isPresent: isPresent,
                             )
                           : SizedBox(),
-                      MarkedAttendance(isPresent: true),
-                      MarkedAttendance(isPresent: true),
-                      MarkedAttendance(isPresent: false),
-                      MarkedAttendance(isPresent: true),
-                      MarkedAttendance(isPresent: true),
-                      MarkedAttendance(isPresent: true),
-                      MarkedAttendance(isPresent: false),
+                      for (int i = 0; i < data.length; i++)
+                        viewType == 0
+                            ? MarkedAttendance(date: data[i][0],isPresent: data[i][1])
+                            : viewType == 1 && data[i][1] == true
+                                ? MarkedAttendance(date: data[i][0],isPresent: data[i][1])
+                                : viewType == 2 && data[i][1] == false
+                                    ? MarkedAttendance(date: data[i][0],isPresent: data[i][1])
+                                    : SizedBox()
                     ],
                   ),
                 );

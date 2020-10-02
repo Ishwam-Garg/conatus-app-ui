@@ -5,8 +5,8 @@ import 'package:conatus_app/components/project_user.dart';
 import 'package:conatus_app/constants/color_palatte.dart';
 import 'package:conatus_app/constants/config.dart';
 import 'package:conatus_app/constants/units.dart';
+import 'package:conatus_app/views/faqs_pages/report_form.dart';
 import 'package:conatus_app/views/profile_pages/edit_profile.dart';
-import 'package:conatus_app/views/profile_pages/report_form.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,9 +32,8 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    // isLoadingProfile = true;
-    // loadProfileData();
-    isLoadingProfile = false;
+    isLoadingProfile = true;
+    loadProfileData();
   }
 
   loadProfileData() async {
@@ -116,8 +115,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 MaterialPageRoute(
                   builder: (_) => ReportForm(
                     name: name,
-                    email: email,
-                    uid: uid,
                   ),
                 ),
               );
@@ -156,15 +153,15 @@ class _ProfilePageState extends State<ProfilePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'name',
+                      name,
                       style: TextStyle(color: Colors.white, fontSize: Unit.FONT_LARGER),
                     ),
                     Text(
-                      'bio',
+                      bio,
                       style: TextStyle(color: Colors.grey, fontSize: Unit.FONT_MEDIUM),
                     ),
                     Text(
-                      "section, year",
+                      "$section, $year year",
                       style: TextStyle(color: Colors.grey, fontSize: Unit.FONT_MEDIUM),
                     ),
                     SizedBox(
@@ -178,21 +175,21 @@ class _ProfilePageState extends State<ProfilePage> {
                     children: [
                       CircleAvatar(
                         radius: 30,
-                        // backgroundImage: NetworkImage(photo),
+                        backgroundImage: NetworkImage(photo),
                         backgroundColor: ColorPalette.BLUE,
                       ),
                       SizedBox(height: 30),
                       GestureDetector(
                         onTap: () async {
-                          // await Navigator.push(
-                          //     context,
-                          //     CupertinoPageRoute(
-                          //         builder: (_) => EditProfile(
-                          //               initalBio: bio,
-                          //               initalYear: year,
-                          //               initialSection: section,
-                          //             )));
-                          // loadProfileData();
+                          await Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                  builder: (_) => EditProfile(
+                                        initalBio: bio,
+                                        initalYear: year,
+                                        initialSection: section,
+                                      )));
+                          loadProfileData();
                         },
                         child: Text(
                           'Edit Profile',
@@ -248,53 +245,46 @@ class _ProfilePageState extends State<ProfilePage> {
                   style: TextStyle(fontSize: Unit.FONT_HEADING, color: Colors.white),
                 ),
               ),
-              // isLoadingProfile
-              //     ? SizedBox()
-              //     : StreamBuilder(
-              //         stream: FirebaseFirestore.instance
-              //             .collection(Config.PROJECT_COLLECTION)
-              //             .where(Config.UID, isEqualTo: uid)
-              //             .snapshots(),
-              //         builder: (context, snapshot) {
-              //           if (snapshot.hasData) {
-              //             return ListView.builder(
-              //                 shrinkWrap: true,
-              //                 physics: NeverScrollableScrollPhysics(),
-              //                 itemCount: snapshot.data.documents.length,
-              //                 itemBuilder: (context, index) {
-              //                   DocumentSnapshot mypost = snapshot.data.documents[index];
-              //                   String docID = mypost.id;
-              //                   String projectName = mypost.get(Config.PROJECT_NAME);
-              //                   String description = mypost.get(Config.PROJECT_DESCRIPTION);
-              //                   String link = mypost.get(Config.PROJECT_LINK);
-              //                   String tag = mypost.get(Config.PROJECT_TAG);
+              isLoadingProfile
+                  ? SizedBox()
+                  : StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection(Config.PROJECT_COLLECTION)
+                          .where(Config.UID, isEqualTo: uid)
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: snapshot.data.documents.length,
+                              itemBuilder: (context, index) {
+                                DocumentSnapshot mypost = snapshot.data.documents[index];
+                                String docID = mypost.id;
+                                String projectName = mypost.get(Config.PROJECT_NAME);
+                                String description = mypost.get(Config.PROJECT_DESCRIPTION);
+                                String link = mypost.get(Config.PROJECT_LINK);
+                                String tag = mypost.get(Config.PROJECT_TAG);
 
-              //                   return ProjectUser(
-              //                     projectName: projectName,
-              //                     description: description,
-              //                     link: link,
-              //                     tag: tag,
-              //                     docID: docID,
-              //                   );
-              //                 });
-              //           } else {
-              //             return Text(
-              //               'No Posts yet',
-              //               style: TextStyle(
-              //                 color: Colors.white,
-              //                 fontSize: Unit.FONT_LARGE,
-              //               ),
-              //             );
-              //           }
-              //         },
-              //       ),
-              ProjectUser(
-                projectName: 'projectName',
-                description: 'description',
-                link: 'link',
-                tag: 'tag',
-                docID: 'docID',
-              )
+                                return ProjectUser(
+                                  projectName: projectName,
+                                  description: description,
+                                  link: link,
+                                  tag: tag,
+                                  docID: docID,
+                                );
+                              });
+                        } else {
+                          return Text(
+                            'No Posts yet',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: Unit.FONT_LARGE,
+                            ),
+                          );
+                        }
+                      },
+                    ),
             ],
           ),
         ),

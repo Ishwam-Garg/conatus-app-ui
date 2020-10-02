@@ -1,4 +1,3 @@
-import 'package:conatus_app/components/custom_divider.dart';
 import 'package:conatus_app/constants/color_palatte.dart';
 import 'package:conatus_app/constants/units.dart';
 import 'package:conatus_app/views/home_pages/home_page_loggedout.dart';
@@ -58,6 +57,7 @@ class _RootLoggedOutState extends State<RootLoggedOut> {
       child: Scaffold(
         backgroundColor: ColorPalette.PRIMARY_DARK,
         body: PageView(
+          physics: NeverScrollableScrollPhysics(),
           controller: _pageController,
           children: <Widget>[
             HomePageLoggedOut(),

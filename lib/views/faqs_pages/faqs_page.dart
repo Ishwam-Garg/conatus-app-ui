@@ -1,10 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:conatus_app/components/custom_appbar.dart';
 import 'package:conatus_app/constants/color_palatte.dart';
+import 'package:conatus_app/constants/config.dart';
 import 'package:conatus_app/constants/units.dart';
 import 'package:conatus_app/components/doubt_box_readonly.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'doubt_form.dart';
+import 'report_form.dart';
+import 'report_form_nonuser.dart';
 
 class FAQsPage extends StatefulWidget {
   @override
@@ -18,7 +22,7 @@ class _FAQsPageState extends State<FAQsPage> {
     // check if user is logged in then can add comment
   }
 
-  Widget doubtBox() {
+  Widget doubtBox({String title, List answers, String name, bool isLoggedin}) {
     return Container(
         width: double.infinity,
         margin: EdgeInsets.symmetric(vertical: 5),
@@ -31,7 +35,26 @@ class _FAQsPageState extends State<FAQsPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            DoubtBoxReadOnly(),
+            DoubtBoxReadOnly(title: title, answers: answers, name: name),
+            isLoggedin ? GestureDetector(
+              onTap: () {
+                // Navigator.push(context, CupertinoPageRoute(builder: (_) => Attendance()));
+              },
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(7),
+                    color: ColorPalette.YELLOW,
+                  ),
+                  child: Text(
+                    'Answer',
+                    style: TextStyle(fontSize: Unit.FONT_MEDIUM, color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ) : SizedBox(),
           ],
         ));
   }
@@ -46,7 +69,17 @@ class _FAQsPageState extends State<FAQsPage> {
       floatingActionButton: FloatingActionButton(
         heroTag: null,
         onPressed: () {
-          Navigator.push(context, CupertinoPageRoute(builder: (_) => DoubtForm()));
+          User user = FirebaseAuth.instance.currentUser;
+          if (user == null) {
+            Navigator.push(context, CupertinoPageRoute(builder: (_) => ReportFormNonUser()));
+          } else {
+            Navigator.push(
+                context,
+                CupertinoPageRoute(
+                    builder: (_) => ReportForm(
+                          name: user.displayName,
+                        )));
+          }
         },
         child: Icon(
           Icons.add,
@@ -64,7 +97,35 @@ class _FAQsPageState extends State<FAQsPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              for (int i = 0; i < 10; i++) doubtBox(),
+              StreamBuilder(
+                stream: FirebaseFirestore.instance.collection(Config.REPORT_COLLECTION).snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: snapshot.data.documents.length,
+                        itemBuilder: (context, index) {
+                          DocumentSnapshot doubt = snapshot.data.documents[index];
+                          // bool isPublic = mypost.get(Config.POSTS_ISPUBLIC);
+                          String title = doubt.get(Config.REASON);
+                          String name = doubt.get(Config.NAME);
+                          List answers = doubt.get(Config.ANSWERS);
+                          User user = FirebaseAuth.instance.currentUser;
+                          bool isLoggedin = user == null ? false : true;
+                          return doubtBox(title: title, name: name, answers: answers, isLoggedin: isLoggedin);
+                        });
+                  } else {
+                    return Text(
+                      'No Posts yet',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: Unit.FONT_LARGE,
+                      ),
+                    );
+                  }
+                },
+              ),
             ],
           ),
         ),

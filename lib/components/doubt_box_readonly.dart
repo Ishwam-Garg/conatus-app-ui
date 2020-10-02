@@ -3,6 +3,10 @@ import 'package:conatus_app/constants/color_palatte.dart';
 import 'package:conatus_app/constants/units.dart';
 
 class DoubtBoxReadOnly extends StatelessWidget {
+  String name;
+  String title;
+  List answers;
+  DoubtBoxReadOnly({@required this.name, @required this.answers, @required this.title});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,7 +24,7 @@ class DoubtBoxReadOnly extends StatelessWidget {
             SizedBox(width: 10),
             Expanded(
               child: Text(
-                'How to add floating button in scaffold How to ld',
+                title,
                 style: TextStyle(fontSize: Unit.FONT_MEDIUM, color: Colors.white, fontWeight: FontWeight.bold),
               ),
             ),
@@ -29,29 +33,33 @@ class DoubtBoxReadOnly extends StatelessWidget {
         Align(
           alignment: Alignment.centerRight,
           child: Text(
-            'Manish Kumarr',
+            name,
             style: TextStyle(fontSize: Unit.FONT_SMALL, color: Colors.white70, fontWeight: FontWeight.bold),
           ),
         ),
-        SizedBox(height: 15),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              height: 20,
-              color: ColorPalette.YELLOW,
-              width: 5,
+        SizedBox(height: 10),
+        for (int i = 0; i < answers.length; i++)
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 10),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  height: 20,
+                  color: ColorPalette.YELLOW,
+                  width: 5,
+                ),
+                SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    answers[i],
+                    style: TextStyle(fontSize: Unit.FONT_MEDIUM, color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
             ),
-            SizedBox(width: 10),
-            Expanded(
-              child: Text(
-                'I am facing problem while using floating button and dont know how to solve it',
-                style: TextStyle(fontSize: Unit.FONT_MEDIUM, color: Colors.white, fontWeight: FontWeight.bold),
-              ),
-            ),
-          ],
-        ),
+          ),
         SizedBox(height: 10),
       ],
     ));

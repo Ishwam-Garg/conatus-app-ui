@@ -3,19 +3,22 @@ import 'package:conatus_app/components/custom_appbar.dart';
 import 'package:conatus_app/constants/color_palatte.dart';
 import 'package:conatus_app/constants/config.dart';
 import 'package:conatus_app/constants/units.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ReportForm extends StatefulWidget {
+class PostForm extends StatefulWidget {
   final name;
-  final email;
   final uid;
-  ReportForm({@required this.name, @required this.email, @required this.uid});
+  PostForm({@required this.name, @required this.uid});
   @override
-  _ReportFormState createState() => _ReportFormState();
+  _PostFormState createState() => _PostFormState();
 }
 
-class _ReportFormState extends State<ReportForm> {
-  String reason;
+class _PostFormState extends State<PostForm> {
+  String date;
+  bool isPublic = true;
+  String title;
+  String message;
 
   Widget headerText(title) {
     return Container(
@@ -27,17 +30,51 @@ class _ReportFormState extends State<ReportForm> {
     );
   }
 
+  Widget isPublicContainer() {
+    return Container(
+      width: double.infinity,
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: Text(
+              "Is the post public only for non-Conatus Members?",
+              style: TextStyle(fontSize: Unit.FONT_LARGER, color: Colors.white, fontWeight: FontWeight.bold),
+            ),
+          ),
+          SizedBox(width: 15),
+          CupertinoSwitch(
+            value: isPublic,
+            onChanged: (val) {
+              print("setting ispublic to $val");
+              setState(() {
+                isPublic = val;
+              });
+            },
+            activeColor: ColorPalette.BLUE,
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget sendButton() {
     return GestureDetector(
       onTap: () async {
-        if (reason != null && reason.isNotEmpty) {
-          // final CollectionReference dataCollection = FirebaseFirestore.instance.collection(Config.REPORT_COLLECTION);
-          // await dataCollection.doc().set({
-          //   Config.NAME: widget.name,
-          //   Config.MAIL: widget.email,
-          //   Config.UID: widget.uid,
-          //   Config.REASON: reason,
-          // });
+        if (message != null &&
+            message.isNotEmpty &&
+            title != null &&
+            title.isNotEmpty &&
+            date != null &&
+            date.isNotEmpty) {
+          final CollectionReference dataCollection = FirebaseFirestore.instance.collection(Config.POSTS);
+          await dataCollection.doc().set({
+            Config.NAME: widget.name,
+            Config.UID: widget.uid,
+            Config.POSTS_ISPUBLIC: isPublic,
+            Config.POST_DATE: date,
+            Config.POST_TITLE: title,
+            Config.POST_MESSAGE: message,
+          });
           Navigator.pop(context);
         } else {
           print("wrong data");
@@ -104,26 +141,43 @@ class _ReportFormState extends State<ReportForm> {
                   isMultiLine: false,
                 ),
                 SizedBox(height: 20),
-                headerText('Your Email'),
-                textInput(
-                  initialValue: widget.email,
-                  change: (val) {},
-                  hintText: 'Your Email',
-                  readOnly: true,
-                  isMultiLine: false,
-                ),
-                SizedBox(height: 20),
-                headerText('Query Brief'),
+                headerText('Date'),
                 textInput(
                   change: (val) {
                     setState(() {
-                      reason = val;
+                      date = val;
                     });
                   },
-                  hintText: 'Explain your problem/query here',
+                  hintText: 'Date in fromat 12th Nov, 2020',
+                  readOnly: false,
+                  isMultiLine: false,
+                ),
+                SizedBox(height: 20),
+                headerText('Title'),
+                textInput(
+                  change: (val) {
+                    setState(() {
+                      title = val;
+                    });
+                  },
+                  hintText: 'Post title',
                   readOnly: false,
                   isMultiLine: true,
                 ),
+                SizedBox(height: 20),
+                headerText('Description'),
+                textInput(
+                  change: (val) {
+                    setState(() {
+                      message = val;
+                    });
+                  },
+                  hintText: 'Post description',
+                  readOnly: false,
+                  isMultiLine: true,
+                ),
+                SizedBox(height: 20),
+                isPublicContainer(),
                 SizedBox(height: 30),
                 sendButton()
               ],

@@ -3,6 +3,10 @@ import 'package:conatus_app/constants/units.dart';
 import 'package:flutter/material.dart';
 
 class BirthdayPost extends StatelessWidget {
+  String name;
+  String date;
+  String message;
+  BirthdayPost({@required this.name});
   @override
   Widget build(BuildContext context) {
     return Container(

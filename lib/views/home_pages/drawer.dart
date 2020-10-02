@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:conatus_app/constants/color_palatte.dart';
+import 'package:conatus_app/constants/config.dart';
 import 'package:conatus_app/constants/units.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +9,46 @@ import 'package:conatus_app/views/profile_pages/profile_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:conatus_app/views/root_loggedout_page.dart';
 
-class UserDrawer {
-  static Widget userProfile({context}) {
+class UserDrawer extends StatefulWidget {
+  @override
+  _UserDrawerState createState() => _UserDrawerState();
+}
+
+class _UserDrawerState extends State<UserDrawer> {
+  String name;
+  String bio;
+  String section;
+  String year;
+  String photo;
+  String email;
+  String uid;
+  bool isLoadingProfile;
+
+  @override
+  void initState() {
+    super.initState();
+    print("called");
+    isLoadingProfile = true;
+    loadProfileData();
+  }
+
+  loadProfileData() async {
+    User user = FirebaseAuth.instance.currentUser;
+    CollectionReference dataCollection = FirebaseFirestore.instance.collection(Config.USER_COLLECTION);
+    DocumentSnapshot userData = await dataCollection.doc(user.uid).get();
+    setState(() {
+      uid = user.uid;
+      name = userData.get(Config.NAME);
+      bio = userData.get(Config.BIO);
+      section = userData.get(Config.SECTION);
+      year = userData.get(Config.YEAR);
+      photo = userData.get(Config.PHOTO);
+      email = userData.get(Config.MAIL);
+      isLoadingProfile = false;
+    });
+  }
+
+  Widget showData() {
     return Container(
       width: double.infinity,
       margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -24,15 +64,15 @@ class UserDrawer {
                 height: 20,
               ),
               Text(
-                'Name',
+                name,
                 style: TextStyle(color: Colors.white, fontSize: Unit.FONT_LARGER),
               ),
               Text(
-                'bio',
+                bio,
                 style: TextStyle(color: Colors.grey, fontSize: Unit.FONT_MEDIUM),
               ),
               Text(
-                "section, year",
+                "$section, $year",
                 style: TextStyle(color: Colors.grey, fontSize: Unit.FONT_MEDIUM),
               ),
               SizedBox(height: 10),
@@ -44,7 +84,7 @@ class UserDrawer {
               children: [
                 CircleAvatar(
                   radius: 30,
-                  // backgroundImage: NetworkImage(photo),
+                  backgroundImage: NetworkImage(photo),
                   backgroundColor: ColorPalette.BLUE,
                 ),
                 SizedBox(height: 10),
@@ -64,7 +104,7 @@ class UserDrawer {
     );
   }
 
-  static Widget buttons({String title, String sideText, Function func, context}) {
+  Widget buttons({String title, String sideText, Function func, context}) {
     return Container(
       width: double.infinity,
       margin: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
@@ -88,7 +128,8 @@ class UserDrawer {
     );
   }
 
-  static Widget homeDrawer(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
     return Drawer(
       elevation: 2,
       child: Container(
@@ -96,7 +137,7 @@ class UserDrawer {
         child: Column(
           children: [
             SizedBox(height: 40),
-            userProfile(context: context),
+            isLoadingProfile ? SizedBox() : showData(),
             CustomDivider.zeroPaddingDividerGrey(),
             buttons(
               title: 'Help',

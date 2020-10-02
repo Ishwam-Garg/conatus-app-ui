@@ -41,7 +41,7 @@ class CustomAppBar {
             canSearch
                 ? GestureDetector(
                     onTap: () {
-                      // Navigator.push(context, CupertinoPageRoute(builder: (_) => SearchBase()));
+                      Navigator.push(context, CupertinoPageRoute(builder: (_) => SearchBase()));
                     },
                     child: Icon(
                       Icons.search,

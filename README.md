@@ -19,9 +19,9 @@ Checklist List
 - [x] logout-route (dont use persistent nav bar in rootloggedout)
 
 #### Backend
-- [ ] Doubts
-- [ ] Posts
-- [ ] Birthdays
+- [x] Doubts
+- [x] Posts
+- [ ] Add answers
 - [ ] Attendance
 
 #### optional

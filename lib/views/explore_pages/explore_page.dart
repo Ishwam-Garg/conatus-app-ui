@@ -18,7 +18,7 @@ class _ExplorePageState extends State<ExplorePage> {
   Widget addProject() {
     return GestureDetector(
       onTap: () {
-        // Navigator.push(context, CupertinoPageRoute(builder: (_) => AddProject()));
+        Navigator.push(context, CupertinoPageRoute(builder: (_) => AddProject()));
       },
       child: Container(
         width: double.infinity,
@@ -65,44 +65,44 @@ class _ExplorePageState extends State<ExplorePage> {
                 ),
               ),
               SizedBox(height: 10),
-              // StreamBuilder(
-              //   stream: FirebaseFirestore.instance.collection(Config.PROJECT_COLLECTION).snapshots(),
-              //   builder: (context, snapshot) {
-              //     if (snapshot.hasData) {
-              //       return ListView.builder(
-              //           shrinkWrap: true,
-              //           physics: NeverScrollableScrollPhysics(),
-              //           itemCount: snapshot.data.documents.length,
-              //           itemBuilder: (context, index) {
-              //             DocumentSnapshot mypost = snapshot.data.documents[index];
-              //             String userPhoto = mypost.get(Config.PHOTO);
-              //             String projectName = mypost.get(Config.PROJECT_NAME);
-              //             String userName = mypost.get(Config.NAME);
-              //             String description = mypost.get(Config.PROJECT_DESCRIPTION);
-              //             String link = mypost.get(Config.PROJECT_LINK);
-              //             String tag = mypost.get(Config.PROJECT_TAG);
-                          
-              //             return ProjectOthers(
-              //               userPhoto: userPhoto,
-              //               projectName: projectName,
-              //               userName: userName,
-              //               description: description,
-              //               link: link,
-              //               tag: tag,
-              //               showDP: true,
-              //             );
-              //           });
-              //     } else {
-              //       return Text(
-              //         'No Posts yet',
-              //         style: TextStyle(
-              //           color: Colors.white,
-              //           fontSize: Unit.FONT_LARGE,
-              //         ),
-              //       );
-              //     }
-              //   },
-              // ),
+              StreamBuilder(
+                stream: FirebaseFirestore.instance.collection(Config.PROJECT_COLLECTION).snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: snapshot.data.documents.length,
+                        itemBuilder: (context, index) {
+                          DocumentSnapshot mypost = snapshot.data.documents[index];
+                          String userPhoto = mypost.get(Config.PHOTO);
+                          String projectName = mypost.get(Config.PROJECT_NAME);
+                          String userName = mypost.get(Config.NAME);
+                          String description = mypost.get(Config.PROJECT_DESCRIPTION);
+                          String link = mypost.get(Config.PROJECT_LINK);
+                          String tag = mypost.get(Config.PROJECT_TAG);
+
+                          return ProjectOthers(
+                            userPhoto: userPhoto,
+                            projectName: projectName,
+                            userName: userName,
+                            description: description,
+                            link: link,
+                            tag: tag,
+                            showDP: true,
+                          );
+                        });
+                  } else {
+                    return Text(
+                      'No Posts yet',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: Unit.FONT_LARGE,
+                      ),
+                    );
+                  }
+                },
+              ),
             ],
           ),
         ),

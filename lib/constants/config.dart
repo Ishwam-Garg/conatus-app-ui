@@ -6,6 +6,9 @@ class Config {
   static const String PROJECT_LINK = 'project_link';
 
   static const String USER_COLLECTION = 'userdata';
+  static const String POSTS_ISBIRTHDAY = 'isBirthday';
+  static const String POSTS_BIRTHDAYNAME = 'birthdayName';
+  static const String POSTS_ISPUBLIC = 'isPublic';
   static const String POSTS = 'posts';
   static const String POST_TITLE = 'title';
   static const String POST_MESSAGE = 'message';
@@ -20,5 +23,6 @@ class Config {
 
   static const String REPORT_COLLECTION = 'reports';
   static const String UID = 'userID';
+  static const String ANSWERS = 'answers';
   static const String REASON = 'reason';
 }

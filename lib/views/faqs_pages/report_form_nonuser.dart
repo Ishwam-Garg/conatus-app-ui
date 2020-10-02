@@ -5,12 +5,13 @@ import 'package:conatus_app/constants/config.dart';
 import 'package:conatus_app/constants/units.dart';
 import 'package:flutter/material.dart';
 
-class DoubtForm extends StatefulWidget {
+class ReportFormNonUser extends StatefulWidget {
   @override
-  _DoubtFormState createState() => _DoubtFormState();
+  _ReportFormNonUserState createState() => _ReportFormNonUserState();
 }
 
-class _DoubtFormState extends State<DoubtForm> {
+class _ReportFormNonUserState extends State<ReportFormNonUser> {
+  String name;
   String reason;
 
   Widget headerText(title) {
@@ -27,13 +28,12 @@ class _DoubtFormState extends State<DoubtForm> {
     return GestureDetector(
       onTap: () async {
         if (reason != null && reason.isNotEmpty) {
-          // final CollectionReference dataCollection = FirebaseFirestore.instance.collection(Config.REPORT_COLLECTION);
-          // await dataCollection.doc().set({
-          //   Config.NAME: widget.name,
-          //   Config.MAIL: widget.email,
-          //   Config.UID: widget.uid,
-          //   Config.REASON: reason,
-          // });
+          final CollectionReference dataCollection = FirebaseFirestore.instance.collection(Config.REPORT_COLLECTION);
+          await dataCollection.doc().set({
+            Config.NAME: name,
+            Config.REASON: reason,
+            Config.ANSWERS: [],
+          });
           Navigator.pop(context);
         } else {
           print("wrong data");
@@ -93,17 +93,13 @@ class _DoubtFormState extends State<DoubtForm> {
                 SizedBox(height: Unit.V_MARGIN),
                 headerText('Name'),
                 textInput(
-                  change: (val) {},
+                  change: (val) {
+                    setState(() {
+                      name = val;
+                    });
+                  },
                   hintText: 'Your Name',
-                  readOnly: true,
-                  isMultiLine: false,
-                ),
-                SizedBox(height: 20),
-                headerText('Your Email'),
-                textInput(
-                  change: (val) {},
-                  hintText: 'Your Email',
-                  readOnly: true,
+                  readOnly: false,
                   isMultiLine: false,
                 ),
                 SizedBox(height: 20),
@@ -114,7 +110,7 @@ class _DoubtFormState extends State<DoubtForm> {
                       reason = val;
                     });
                   },
-                  hintText: 'Explain your problem/query here',
+                  hintText: 'Ask your questionn here',
                   readOnly: false,
                   isMultiLine: true,
                 ),

@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:conatus_app/components/conatus_post.dart';
 import 'package:conatus_app/components/custom_appbar.dart';
 import 'package:conatus_app/constants/color_palatte.dart';
 import 'package:conatus_app/auth/login_button.dart';
+import 'package:conatus_app/constants/config.dart';
 import 'package:conatus_app/constants/units.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,57 +28,51 @@ class _HomePageLoggedOutState extends State<HomePageLoggedOut> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-            Column(
-              children: <Widget>[
-              SizedBox(height: 10),
-              LoginButton(),
-              // StreamBuilder(
-              //   stream: FirebaseFirestore.instance.collection(Config.POSTS).snapshots(),
-              //   builder: (context, snapshot) {
-              //     if (snapshot.hasData) {
-              //       return ListView.builder(
-              //           shrinkWrap: true,
-              //           physics: NeverScrollableScrollPhysics(),
-              //           itemCount: snapshot.data.documents.length,
-              //           itemBuilder: (context, index) {
-              //             DocumentSnapshot mypost = snapshot.data.documents[index];
-              //             String title = mypost.get(Config.POST_TITLE);
-              //             String message = mypost.get(Config.POST_MESSAGE);
-              //             String issueDate = mypost.get(Config.POST_DATE);
-              //             return ConatusPost(
-              //               title: title,
-              //               message: message,
-              //               issueDate: issueDate,
-              //             );
-              //           });
-              //     } else {
-              //       return Text(
-              //         'No Posts yet',
-              //         style: TextStyle(
-              //           color: Colors.white,
-              //           fontSize: Unit.FONT_LARGE,
-              //         ),
-              //       );
-              //     }
-              //   },
-              // ),
-              ConatusPost(
-                title: 'title',
-                message: 'message',
-                issueDate: 'issueDate',
-                ),
+              Column(
+                children: <Widget>[
+                  SizedBox(height: 10),
+                  LoginButton(),
+                  StreamBuilder(
+                    stream: FirebaseFirestore.instance.collection(Config.POSTS).snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: snapshot.data.documents.length,
+                            itemBuilder: (context, index) {
+                              DocumentSnapshot mypost = snapshot.data.documents[index];
+                              bool isPublic = mypost.get(Config.POSTS_ISPUBLIC);
+                              if (isPublic) {
+                                String title = mypost.get(Config.POST_TITLE);
+                                String message = mypost.get(Config.POST_MESSAGE);
+                                String issueDate = mypost.get(Config.POST_DATE);
+                                return ConatusPost(
+                                  title: title,
+                                  message: message,
+                                  issueDate: issueDate,
+                                );
+                              } else {
+                                return SizedBox();
+                              }
+                            });
+                      } else {
+                        return Text(
+                          'No Posts yet',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: Unit.FONT_LARGE,
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                ],
+              ),
             ],
           ),
-        ],
         ),
-      ),
       ),
     );
   }
 }
-
-
-
-
-
-

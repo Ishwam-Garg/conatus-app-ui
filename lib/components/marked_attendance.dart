@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 class MarkedAttendance extends StatelessWidget {
   final bool isPresent;
-
-  MarkedAttendance({@required this.isPresent}) : assert(isPresent != null);
+  final date;
+  MarkedAttendance({@required this.isPresent, this.date}) : assert(isPresent != null);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class MarkedAttendance extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                '12.09.2020',
+                date,
                 style: TextStyle(fontSize: Unit.FONT_LARGE, color: Colors.white),
               ),
               SizedBox(height: 5),

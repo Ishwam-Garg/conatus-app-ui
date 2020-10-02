@@ -31,16 +31,16 @@ class ProjectUser extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  // Navigator.push(
-                  //     context,
-                  //     CupertinoPageRoute(
-                  //         builder: (_) => EditProject(
-                  //               projectName: projectName,
-                  //               description: description,
-                  //               link: link,
-                  //               tag: tag,
-                  //               docID: docID,
-                  //             )));
+                  Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (_) => EditProject(
+                                projectName: projectName,
+                                description: description,
+                                link: link,
+                                tag: tag,
+                                docID: docID,
+                              )));
                 },
                 child: Text(
                   'EDIT',

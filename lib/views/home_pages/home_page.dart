@@ -3,11 +3,14 @@ import 'package:conatus_app/components/birthday_post.dart';
 import 'package:conatus_app/components/conatus_post.dart';
 import 'package:conatus_app/components/custom_appbar.dart';
 import 'package:conatus_app/constants/color_palatte.dart';
+import 'package:conatus_app/constants/config.dart';
 import 'package:conatus_app/constants/units.dart';
+import 'package:conatus_app/views/faqs_pages/report_form.dart';
 import 'package:conatus_app/views/home_pages/attendance.dart';
+import 'package:conatus_app/views/home_pages/post_form.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:conatus_app/constants/color_palatte.dart';
 import 'drawer.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,7 +19,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  //attendance box at first
+  GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+
   Widget attendanceBox() {
     return Container(
         width: double.infinity,
@@ -86,13 +90,12 @@ class _HomePageState extends State<HomePage> {
     _drawerKey.currentState.openDrawer();
   }
 
-  GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _drawerKey,
       appBar: CustomAppBar.appBarwithMenu(title: 'Home', context: context, func: openDrawer),
-      drawer: UserDrawer.homeDrawer(context),
+      drawer: UserDrawer(),
       floatingActionButton: FloatingActionButton(
         heroTag: null,
         child: Icon(
@@ -100,10 +103,20 @@ class _HomePageState extends State<HomePage> {
           color: ColorPalette.SELECTED_NAV_BAR,
         ),
         backgroundColor: ColorPalette.PRIMARY_DARK,
-        onPressed: () {
-          //add post page here
-          // Navigator.push(
-          //     context, CupertinoPageRoute(builder: (_) => doubt_page()));
+        onPressed: () async {
+          String name, uid;
+          User user = FirebaseAuth.instance.currentUser;
+          CollectionReference dataCollection = FirebaseFirestore.instance.collection(Config.USER_COLLECTION);
+          DocumentSnapshot userData = await dataCollection.doc(user.uid).get();
+          uid = user.uid;
+          name = userData.get(Config.NAME);
+          Navigator.push(
+              context,
+              CupertinoPageRoute(
+                  builder: (_) => PostForm(
+                        name: name,
+                        uid: uid,
+                      )));
         },
         elevation: 5,
       ),
@@ -120,46 +133,38 @@ class _HomePageState extends State<HomePage> {
               Column(
                 children: <Widget>[
                   SizedBox(height: 10),
-                  BirthdayPost(),
+                  // BirthdayPost(),
                   SizedBox(height: 10),
                   attendanceBox(),
-                  /*Backend Linked Starts Here
-              // ConatusPost(),
-              // StreamBuilder(
-              //   stream: FirebaseFirestore.instance.collection(Config.POSTS).snapshots(),
-              //   builder: (context, snapshot) {
-              //     if (snapshot.hasData) {
-              //       return ListView.builder(
-              //           shrinkWrap: true,
-              //           physics: NeverScrollableScrollPhysics(),
-              //           itemCount: snapshot.data.documents.length,
-              //           itemBuilder: (context, index) {
-              //             DocumentSnapshot mypost = snapshot.data.documents[index];
-              //             String title = mypost.get(Config.POST_TITLE);
-              //             String message = mypost.get(Config.POST_MESSAGE);
-              //             String issueDate = mypost.get(Config.POST_DATE);
-              //             return ConatusPost(
-              //               title: title,
-              //               message: message,
-              //               issueDate: issueDate,
-              //             );
-              //           });
-              //     } else {
-              //       return Text(
-              //         'No Posts yet',
-              //         style: TextStyle(
-              //           color: Colors.white,
-              //           fontSize: Unit.FONT_LARGE,
-              //         ),
-              //       );
-              //     }
-              //   },
-              // ),
-               */
-                  ConatusPost(
-                    title: 'title',
-                    message: 'message',
-                    issueDate: 'issueDate',
+                  StreamBuilder(
+                    stream: FirebaseFirestore.instance.collection(Config.POSTS).snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: snapshot.data.documents.length,
+                            itemBuilder: (context, index) {
+                              DocumentSnapshot mypost = snapshot.data.documents[index];
+                              String title = mypost.get(Config.POST_TITLE);
+                              String message = mypost.get(Config.POST_MESSAGE);
+                              String issueDate = mypost.get(Config.POST_DATE);
+                              return ConatusPost(
+                                title: title,
+                                message: message,
+                                issueDate: issueDate,
+                              );
+                            });
+                      } else {
+                        return Text(
+                          'No Posts yet',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: Unit.FONT_LARGE,
+                          ),
+                        );
+                      }
+                    },
                   ),
                 ],
               ),
