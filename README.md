@@ -21,7 +21,7 @@ Checklist List
 #### Backend
 - [x] Doubts
 - [x] Posts
-- [ ] Add answers
+- [x] Add answers
 - [ ] Attendance
 
 #### optional
