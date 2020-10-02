@@ -28,14 +28,14 @@ class LoginButton extends StatelessWidget {
       );
       final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
       final User user = (await _firebaseAuth.signInWithCredential(credential)).user;
-      // print(user.displayName);
-      // print("logged in");
+      print(user.displayName);
+      print("logged in");
 
       bool isRegistered = await checkExist(user.uid);
       if (isRegistered) {
-        Navigator.of(context, rootNavigator: true).pushReplacement(MaterialPageRoute(builder: (_) => RootLoggedIn()));
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => RootLoggedIn()));
       } else {
-        Navigator.of(context, rootNavigator: true).pushReplacement(MaterialPageRoute(builder: (_) => Register()));
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => Register()));
       }
     } catch (e) {
       print(e);

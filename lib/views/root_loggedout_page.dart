@@ -13,38 +13,8 @@ class RootLoggedOut extends StatefulWidget {
 
 class _RootLoggedOutState extends State<RootLoggedOut> {
   int selectedIndex = 0;
-  String _currentPage = "Home";
-  List<String> pageKeys = ["Home", "FAQs"];
-  Map<String, GlobalKey<NavigatorState>> _navigatorKeys = {
-    "Home": GlobalKey<NavigatorState>(),
-    "FAQs": GlobalKey<NavigatorState>(),
-  };
+  PageController _pageController = PageController(initialPage: 0);
 
-  void _selectTab(String tabItem, int index) {
-    if (tabItem == _currentPage) {
-      _navigatorKeys[tabItem].currentState.popUntil((route) => route.isFirst);
-    } else {
-      setState(() {
-        _currentPage = pageKeys[index];
-      });
-    }
-  }
-
-  PageController _pageController;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController();
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
-  //Bottom Navbar
   Widget bottomNavbar() {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
@@ -57,10 +27,12 @@ class _RootLoggedOutState extends State<RootLoggedOut> {
       elevation: 16,
       iconSize: 25,
       onTap: (index) {
+        print("index $index");
         setState(() {
           selectedIndex = index;
         });
-        _selectTab(pageKeys[index], index);
+        _pageController.animateToPage(selectedIndex,
+            duration: Duration(milliseconds: 200), curve: Curves.fastOutSlowIn);
       },
       items: [
         BottomNavigationBarItem(icon: Icon(Icons.store), title: Text('Home')),
@@ -69,69 +41,31 @@ class _RootLoggedOutState extends State<RootLoggedOut> {
     );
   }
 
-  //run home page !
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async {
-        final isFirstRouteInCurrentTab = !await _navigatorKeys[_currentPage].currentState.maybePop();
-        if (isFirstRouteInCurrentTab) {
-          if (_currentPage != "Home") {
-            setState(() {
-              selectedIndex = 0;
-            });
-            _selectTab("Home", 0);
-            return false;
-          }
+      onWillPop: () {
+        if (selectedIndex != 0) {
+          setState(() {
+            selectedIndex = 0;
+          });
+          _pageController.animateToPage(selectedIndex,
+              duration: Duration(milliseconds: 200), curve: Curves.fastOutSlowIn);
+        } else {
+          Navigator.pop(context);
         }
-        return isFirstRouteInCurrentTab;
       },
       child: Scaffold(
         backgroundColor: ColorPalette.PRIMARY_DARK,
-        body: Column(
+        body: PageView(
+          controller: _pageController,
           children: <Widget>[
-            Expanded(
-              child: Stack(children: <Widget>[
-                _buildOffstageNavigator("Home"),
-                _buildOffstageNavigator("FAQs"),
-              ]),
-            ),
-            CustomDivider.zeroPaddingDivider(),
+            HomePageLoggedOut(),
+            FAQsPage(),
           ],
         ),
         bottomNavigationBar: bottomNavbar(),
       ),
-    );
-  }
-
-  Widget _buildOffstageNavigator(String tabItem) {
-    return Offstage(
-      offstage: _currentPage != tabItem,
-      child: TabNavigator(
-        navigatorKey: _navigatorKeys[tabItem],
-        tabItem: tabItem,
-      ),
-    );
-  }
-}
-
-class TabNavigator extends StatelessWidget {
-  final GlobalKey<NavigatorState> navigatorKey;
-  final String tabItem;
-  const TabNavigator({Key key, this.navigatorKey, this.tabItem}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    Widget child;
-    if (tabItem == "Home")
-      child = HomePageLoggedOut();
-    else if (tabItem == "FAQs") child = FAQsPage();
-
-    return Navigator(
-      key: navigatorKey,
-      onGenerateRoute: (routeSettings) {
-        return MaterialPageRoute(builder: (context) => child);
-      },
     );
   }
 }

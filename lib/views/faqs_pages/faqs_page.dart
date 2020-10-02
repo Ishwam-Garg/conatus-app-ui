@@ -44,6 +44,7 @@ class _FAQsPageState extends State<FAQsPage> {
       ),
       backgroundColor: ColorPalette.PRIMARY_BG,
       floatingActionButton: FloatingActionButton(
+        heroTag: null,
         onPressed: () {
           Navigator.push(context, CupertinoPageRoute(builder: (_) => DoubtForm()));
         },

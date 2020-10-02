@@ -3,6 +3,7 @@ import 'package:conatus_app/components/custom_divider.dart';
 import 'package:conatus_app/components/marked_attendance.dart';
 import 'package:conatus_app/constants/color_palatte.dart';
 import 'package:conatus_app/constants/units.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Attendance extends StatefulWidget {
@@ -12,6 +13,30 @@ class Attendance extends StatefulWidget {
 
 class _AttendanceState extends State<Attendance> {
   bool isPresent;
+  int viewType = 0;
+  static const TextStyle tabTextStyle = const TextStyle(fontSize: 18);
+  final Map<int, Widget> tabBar = const <int, Widget>{
+    0: Text('Overall', style: tabTextStyle,),
+    1: Text('Present', style: tabTextStyle,),
+    2: Text('Absent', style: tabTextStyle,),
+  };
+
+  Widget segmentedControl() {
+    return Container(
+      width: double.infinity,
+      child: CupertinoSegmentedControl<int>(
+          groupValue: viewType,
+          borderColor: ColorPalette.BLUE,
+          selectedColor: ColorPalette.BLUE,
+          children: tabBar,
+          onValueChanged: (int i) {
+            setState(() {
+              viewType = i;
+            });
+            print(tabBar[i]);
+          }),
+    );
+  }
 
   Widget markAtt() {
     return Container(
@@ -97,7 +122,7 @@ class _AttendanceState extends State<Attendance> {
       body: CustomScrollView(
         physics: BouncingScrollPhysics(),
         slivers: <Widget>[
-          AttendanceSliverBar(),
+          AttendanceSliverBar(viewType : viewType),
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
@@ -106,6 +131,8 @@ class _AttendanceState extends State<Attendance> {
                   padding: EdgeInsets.symmetric(horizontal: Unit.H_MARGIN),
                   child: Column(
                     children: <Widget>[
+                      SizedBox(height: 10),
+                      segmentedControl(),
                       SizedBox(height: 10),
                       isPresent == null ? markAtt() : SizedBox(),
                       SizedBox(height: 10),

@@ -12,6 +12,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/color_palatte.dart';
+import '../root_loggedout_page.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -86,11 +87,11 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           GestureDetector(
             onTap: () async {
-              // final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+              final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
               try {
-                // await _firebaseAuth.signOut();
-                // Navigator.of(context, rootNavigator: true)
-                //     .pushReplacement(MaterialPageRoute(builder: (_) => LoginPage()));
+                await _firebaseAuth.signOut();
+                Navigator.of(context, rootNavigator: true)
+                    .pushReplacement(MaterialPageRoute(builder: (_) => RootLoggedOut()));
               } catch (e) {
                 print("Error in logging out $e");
               }
@@ -166,7 +167,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       "section, year",
                       style: TextStyle(color: Colors.grey, fontSize: Unit.FONT_MEDIUM),
                     ),
-                    SizedBox(height: 30,),
+                    SizedBox(
+                      height: 30,
+                    ),
                   ],
                 ),
                 Column(
@@ -205,7 +208,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar.editAppBar(title: 'Profile',context: context),
+      appBar: CustomAppBar.editAppBar(title: 'Profile', context: context),
       backgroundColor: ColorPalette.PRIMARY_BG,
       body: Container(
         constraints: BoxConstraints.expand(),

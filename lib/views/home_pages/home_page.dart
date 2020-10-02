@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:conatus_app/components/birthday_post.dart';
 import 'package:conatus_app/components/conatus_post.dart';
 import 'package:conatus_app/components/custom_appbar.dart';
 import 'package:conatus_app/constants/color_palatte.dart';
@@ -7,7 +8,7 @@ import 'package:conatus_app/views/home_pages/attendance.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:conatus_app/constants/color_palatte.dart';
-import 'home_page_drawer_user.dart';
+import 'drawer.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -81,129 +82,6 @@ class _HomePageState extends State<HomePage> {
         ));
   }
 
-  Widget birthdayBox() {
-    return Container(
-        width: double.infinity,
-        margin: EdgeInsets.symmetric(vertical: 5),
-        padding: EdgeInsets.all(Unit.V_MARGIN),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: Colors.black54,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.cake,
-                        color: ColorPalette.YELLOW,
-                      ),
-                      SizedBox(
-                        width: 2,
-                      ),
-                      Text(
-                        'Happy Birthday',
-                        style: TextStyle(fontSize: Unit.FONT_LARGE, color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  width: 10,
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CircleAvatar(
-                        radius: 30,
-                        backgroundColor: ColorPalette.BLUE,
-                        // backgroundImage: NetworkImage(photo),
-                      ),
-                      Text(
-                        "Name",
-                        style: TextStyle(color: ColorPalette.UNSELECTED_NAV_BAR),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 5,
-                        height: 80,
-                        color: ColorPalette.YELLOW,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            alignment: Alignment.topCenter,
-                            child: Text(
-                              "\"Conatus wishes you a \n a very happy birthday \n may you achieve \n all your goals in future\"",
-                              style: TextStyle(fontSize: Unit.FONT_SMALL, color: Colors.white),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-              ],
-            ),
-            /*
-            GestureDetector(
-              onTap: () {
-                /*
-                Navigator.push(
-                    context, CupertinoPageRoute(builder: (_) => Attendance()));
-                */
-              },
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(7),
-                    color: ColorPalette.YELLOW,
-                  ),
-                  child: Text(
-                    'SHOW',
-                    style: TextStyle(fontSize: Unit.FONT_MEDIUM,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-            ),*/
-          ],
-        ));
-  }
-
   void openDrawer() {
     _drawerKey.currentState.openDrawer();
   }
@@ -213,13 +91,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _drawerKey,
-      appBar: CustomAppBar.appBarwithMenu(
-        title: 'Home',
-        context: context,
-        func: openDrawer
-      ),
+      appBar: CustomAppBar.appBarwithMenu(title: 'Home', context: context, func: openDrawer),
       drawer: UserDrawer.homeDrawer(context),
       floatingActionButton: FloatingActionButton(
+        heroTag: null,
         child: Icon(
           Icons.chat,
           color: ColorPalette.SELECTED_NAV_BAR,
@@ -245,7 +120,7 @@ class _HomePageState extends State<HomePage> {
               Column(
                 children: <Widget>[
                   SizedBox(height: 10),
-                  birthdayBox(),
+                  BirthdayPost(),
                   SizedBox(height: 10),
                   attendanceBox(),
                   /*Backend Linked Starts Here
